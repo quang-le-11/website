@@ -1,0 +1,15 @@
+{
+    "name": "quangle/show_website",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Le Vinh Quang",
+            "email": "levinhquangpy@gmail.com"
+        }
+    ],
+    "require": {}
+}
