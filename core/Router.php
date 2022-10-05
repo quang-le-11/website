@@ -5,13 +5,16 @@ namespace app\core;
 class Router
 {
     public Request $request;
+    public Response $response;
     
     protected $routes = [];
 
     public function __construct (
-        \app\core\Request $request
+        \app\core\Request $request,
+        \app\core\Response $response
     ) {
         $this->request = $request;
+        $this->response = $response;
     }
 
     public function get($path, $callback)
