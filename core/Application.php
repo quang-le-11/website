@@ -11,16 +11,19 @@ class Application
     public Request $request;
     public Response $response;
     public Controller $controller;
+
+    public Databases $db;
     
     public function __construct(
-        $rootPath
+        $rootPath,
+        array $config
     ) {   
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
-        $this->router = new Router($this->request);
-      
+        $this->router = new Router($this->request, $this->response);
+        $this->db = new Databases($config['db']);
     }
 
     public function run()
@@ -28,10 +31,16 @@ class Application
        echo $this->router->resolve();
     }
 
+    public function db()
+    {
+
+    }
+
     public function getController()
     {
         return $this->controller;
     }
+
     public function setController(Controller $controller)
     {
         $this->controller = $controller;
