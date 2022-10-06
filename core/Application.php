@@ -7,12 +7,13 @@ class Application
     public static string $ROOT_DIR;
     public static Application $app;
 
+    public string $layout = 'main';
     public string $userClass;
     public Router $router;
     public Request $request;
     public Response $response;
     public Session $session;
-    public Controller $controller;
+    public ?Controller $controller = null;
 
     public Databases $db;
     public ?DbModel $user;
@@ -41,7 +42,15 @@ class Application
 
     public function run()
     {
-       echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (\Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            echo $this->router->renderView('_error', [
+                'exception' => $e
+            ]);
+        }
+
     }
 
     public static function isGuest()
