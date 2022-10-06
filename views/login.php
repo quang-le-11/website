@@ -1,19 +1,11 @@
-<h1> Contact </h1>
+<?php
+/** @var $model \app\models\User */
 
-<form action="" method="post">
-  <div class="form-group">
-    <label >Subject</label>
-    <input type="text" name="subject" class="form-control" >
-  </div>
+?>
+<h1>Login</h1>
 
-  <div class="form-group">
-    <label >Email</label>
-    <input type="text" name="email" class="form-control" >
-  </div>
-  <div class="form-group">
-    <label ><Body></Body></label>
-    <textarea name="body" class="form-control" > </textarea>
-  </div>
- 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<?php $form = \app\core\form\Form::begin('', 'post') ?>
+<?= $form->field($model, 'email')?>
+<?= $form->field($model, 'password')->passwordField() ?>
+<button type="submit" class="btn btn-primary">Submit</button>
+<?php \app\core\form\Form::end() ?>
