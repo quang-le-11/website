@@ -1,9 +1,9 @@
 <?php
 namespace app\models;
 
-use app\core\DbModel;
+use app\core\UserModel;
 
-class User extends DbModel
+class User extends UserModel
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -25,6 +25,11 @@ class User extends DbModel
     public function attributes(): array
     {
         return ['firstname', 'lastname', 'email', 'password', 'status'];
+    }
+
+    public function primaryKey(): string
+    {
+       return 'id';
     }
 
     public function labels(): array
@@ -56,5 +61,10 @@ class User extends DbModel
             'password' => [self::RULES_REQUIRED, [self::RULES_MIN, 'min' => 8], [self::RULES_MAX, 'max' => 24]],
             'confirmPassword' => [self::RULES_REQUIRED, [self::RULES_MATCH, 'match' => 'password']],
         ];
+    }
+
+    public function getDisplayName(): string
+    {
+        return $this->firstname. ' '.$this->lastname;
     }
 }
