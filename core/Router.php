@@ -33,8 +33,8 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
         if($callback === false) {
             Application::$app->response->setStatusCode(404);
-            return $this->renderView("404");;
-            
+            return $this->renderView("_404");;
+
         } 
         if(is_string($callback)) {
             return $this->renderView($callback);

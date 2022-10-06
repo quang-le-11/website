@@ -2,11 +2,15 @@
 
 namespace app\core;
 
+
 abstract class DbModel extends Model
 {
     abstract public function tableName(): string;
     abstract public function attributes(): array;
 
+    /**
+     * @return bool
+     */
     public function  save()
     {
         $tableName = $this->tableName();

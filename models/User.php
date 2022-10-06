@@ -27,6 +27,17 @@ class User extends DbModel
         return ['firstname', 'lastname', 'email', 'password', 'status'];
     }
 
+    public function labels(): array
+    {
+        return [
+            'firstname' => 'First Name',
+            'lastname' => 'Last Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'confirmPassword' => 'Confirm password'
+        ];
+    }
+
     public function save()
     {
         $this->status = self::STATUS_INACTIVE;
@@ -39,7 +50,9 @@ class User extends DbModel
         return [
             'firstname' => [self::RULES_REQUIRED],
             'lastname' => [self::RULES_REQUIRED],
-            'email' => [self::RULES_REQUIRED, self::RULES_EMAIL],
+            'email' => [self::RULES_REQUIRED, self::RULES_EMAIL, [
+                self::RULES_UNIQUE, 'class' => self::class
+            ]],
             'password' => [self::RULES_REQUIRED, [self::RULES_MIN, 'min' => 8], [self::RULES_MAX, 'max' => 24]],
             'confirmPassword' => [self::RULES_REQUIRED, [self::RULES_MATCH, 'match' => 'password']],
         ];
