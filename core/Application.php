@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\core\db\Databases;
+
 class Application
 {
     public static string $ROOT_DIR;
@@ -16,8 +18,10 @@ class Application
     public ?Controller $controller = null;
 
     public Databases $db;
-    public ?DbModel $user;
-    
+    public ?UserModel $user;
+    public View $view;
+
+
     public function __construct(
         $rootPath,
         array $config
@@ -29,6 +33,8 @@ class Application
         $this->response = new Response();
         $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
+        $this->view = new view();
+
         $this->db = new Databases($config['db']);
 
         $primaryValue = $this->session->get('user');
@@ -46,7 +52,7 @@ class Application
             echo $this->router->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
-            echo $this->router->renderView('_error', [
+            echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
         }
@@ -68,7 +74,7 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(DbModel $user)
+    public function login(UserModel $user)
     {
         $this->user = $user;
         $primaryKey = $user->primaryKey();
