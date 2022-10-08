@@ -16,15 +16,15 @@ class AuthController extends Controller
         $this->registerMiddleware(new AuthMiddleware(['profile']));
     }
 
-    public function login(Request $request, Response $response)
+    public function login(Request $request)
     {
         $loginForm = new LoginForm();
 
         if($request->isPost()) {
             $loginForm->loadData($request->getBody());
             if($loginForm->validate() && $loginForm->login()) {
-                $response->redirect('/');
-                return;
+                Application::$app->response->redirect('/');
+                exit;
             }
         }
 
@@ -44,13 +44,9 @@ class AuthController extends Controller
            
             if($user->validate() && $user->save()) {
                 Application::$app->session->setFlash('success', 'Thanks for registering');
-                Application::$app->response->redirect('/login');
+                Application::$app->response->redirect('/');
                 exit;
             }
-          
-            return $this->reder('register', [
-                'model' => $user
-            ]);
         }
 
         return $this->reder('register', [
@@ -58,10 +54,10 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request, Response $response)
+    public function logout(Request $request)
     {
         Application::$app->logout();
-        $response->redirect('/');
+        Application::$app->response->redirect('/');
     }
 
     public function profile()

@@ -53,6 +53,6 @@ class Router
                 $middleware->execute();
             }
         }
-        return call_user_func($callback, $this->request, $this->response);
+        return call_user_func($callback, $this->request);
     }
 }
