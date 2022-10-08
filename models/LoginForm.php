@@ -33,10 +33,8 @@ class LoginForm extends Model
             $this->addError('email', 'User does not exits with this email');
             return false;
         }
-        if (password_verify($this->password, $user->password)) {
-            echo '<pre>';
-            var_dump($user->password);
-            echo '</pre>';
+        $pwd_peppered = hash_hmac("sha256", $user->password);
+        if (password_verify($this->password, $pwd_peppered)) {
             $this->addError('password', 'Password is incorrect');
             return false;
         }

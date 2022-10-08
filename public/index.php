@@ -9,7 +9,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 $config = [
-    'userClass' => \app\models\User::class,
+   'userClass' => \app\models\User::class,
     'db' => [
         'dsn' => $_ENV['DB_DSN'],
         'user' => $_ENV['DB_USER'],
@@ -19,9 +19,9 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
-$app->router->get('/', [SiteController::class, 'home']);
-$app->router->get('/contact', [SiteController::class, 'contact']);
-$app->router->post('/contact', [SiteController::class, 'contact']);
+//$app->on(Application::EVENT_BEFORE_REQUEST, function () {
+//    echo "Before request";
+//});
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
